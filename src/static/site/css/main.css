@@ -143,6 +143,11 @@ body>.navbar-transparent {
     height: 400px
 }
 
+.img-resize {
+   display: block;
+  max-width: 100%;
+  height: auto;
+}
 .img-dim {
     opacity: 0.5;
     box-shadow: inset 0px 0px 64px 64px #EA1717, 0px 0px 4px 4px #EA1717;
