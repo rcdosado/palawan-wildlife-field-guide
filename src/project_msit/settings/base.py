@@ -71,6 +71,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_extensions',
+
     'authtools',
     'crispy_forms',
     'easy_thumbnails',
