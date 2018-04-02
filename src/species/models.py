@@ -78,14 +78,6 @@ class Genus(models.Model):
 	def __str__(self):
 		return self.title
 
-class SpecieName(models.Model):
-	title = models.CharField(max_length=40,
-		help_text="Species name of this species, ex. Familiaris, from Canis Familiaris")
-	description = models.TextField(blank=True)
-
-	def __str__(self):
-		return self.title
-
 class Species(models.Model):
 	RECORD_BASIS = (
 		('','-----------'),
@@ -118,15 +110,16 @@ class Species(models.Model):
 		help_text="The full scientific name of the family in which the taxon is classified.")
 	genus = models.ForeignKey(Genus,
 		help_text="The full scientific name of the genus in which the taxon is classified")
-	specie = models.ForeignKey(SpecieName,verbose_name="species name",
+	specie = models.CharField(max_length=80,verbose_name="species name",
 		help_text="Species name of this species, ex. Familiaris, from Canis Familiaris.")
-	sciname_author = models.CharField(max_length=80)
+	sciname_author = models.CharField(max_length=80,verbose_name="SciName Author")
 	basis_of_record = models.CharField(max_length=3,verbose_name="record basis",
 		choices=RECORD_BASIS,default='hob',
 		help_text="The specific nature of the data record - a subtype of the dcterms:type. ")
-	category = models.IntegerField(choices=SPECIES_CATEGORY,default=30,
+	category = models.IntegerField(choices=SPECIES_CATEGORY,
 		help_text="The category where this species belong to.")
-	slug = AutoSlugField(populate_from=['genus','specie'])
+	slug = AutoSlugField(populate_from=['genus','specie'],verbose_name="Name")
+	taxonomic_notes = models.TextField(help_text="Any notes you wan to add about this species",blank=True)
 	created = CreationDateTimeField()
 	modified = ModificationDateTimeField()
 
@@ -144,7 +137,7 @@ class Species(models.Model):
 
 
 	def get_full_name(self):
-		return self.family.title+' '+self.specie.title
+		return self.family.title+' '+self.specie
 
 class CommonName(models.Model):
 	name = models.CharField(max_length=80)
@@ -159,5 +152,15 @@ class CommonName(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class SpeciesImage(models.Model):
+	species = models.ForeignKey(Species,help_text="Add your species image(s) here")
+	image = models.ImageField('Species Image',upload_to='species_pics/%Y-%m-%d/',null=True,blank=True)
+	description = models.TextField(blank=True,help_text="Any description of the image e.g attribution, location etc.")
+
+	def __str__(self):
+		return self.species.scientific_name
+
+
 
 

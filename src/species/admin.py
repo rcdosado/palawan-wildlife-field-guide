@@ -1,22 +1,37 @@
 from django.contrib import admin
 from species.models import ( 
-	Species,Kingdom,Phylum,ClassName, Order, Family, Genus, SpecieName, CommonName
+	Species,Kingdom,Phylum,ClassName, Order, Family, Genus, CommonName, SpeciesImage
 )
 
 # Register your models here.
+class CommonNameInline(admin.StackedInline):
+	model = CommonName
+	max_num = 2
+	#can_delete = True
+	#show_change_link = True
 
+class SpeciesImageInline(admin.StackedInline):
+	model = SpeciesImage
+	max_num = 3
+	can_delete = True
+	show_change_link = True
 
 class SpeciesAdmin(admin.ModelAdmin):
+	inlines = [CommonNameInline,SpeciesImageInline]
+
 	fieldsets = [
-		("Class Taxon Details", {"fields":["kingdom","phylum","classname","order","family","genus"]}),
-		("Identification Details", {"fields":["specie","category","basis_of_record"]}),
+		("Taxon Details", {"fields":["kingdom","phylum","classname","order","family","genus","specie","sciname_author"]}),
+		("Identification Details", {"fields":["category","basis_of_record","taxonomic_notes"]}),
 	]
 	readonly_fields = ("created","modified",)
-	list_display = ("scientific_name","kingdom","phylum","classname","order","family","genus","specie","slug", "created","modified",)
+	list_display = ("slug","kingdom","phylum","classname","order","family","genus","specie","sciname_author","created","modified",)
 	#list_editable = ("kingdom",)
-	list_display_links = ("scientific_name",)
+	date_hierarchy = "modified"
+	list_display_links = ("slug",)
 	list_filter = ("category","created","modified",)
 	search_fields = ("kingdom","phylum","classname","order","family","genus","specie", "common_title",)
+	ordering = ("-modified",)
+
 	
 admin.site.register(Species,SpeciesAdmin)
 
@@ -36,4 +51,3 @@ admin.site.register(ClassName)
 admin.site.register(Order)
 admin.site.register(Family)
 admin.site.register(Genus)
-admin.site.register(SpecieName)
