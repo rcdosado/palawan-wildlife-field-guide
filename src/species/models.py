@@ -3,6 +3,14 @@ from django_extensions.db.fields import (
 	AutoSlugField, CreationDateTimeField, ModificationDateTimeField,
 )
 
+class Category(models.Model):
+	title = models.CharField(max_length=40,
+		help_text="Write which group this animal belongs to, relative to species's class e.g aves for birds")
+	class Meta:
+		verbose_name = 'Category'
+		verbose_name_plural = 'Categories'
+	def __str__(self):
+		return self.title	
 
 class Kingdom(models.Model):
 	title = models.CharField(max_length=40,
@@ -32,6 +40,8 @@ class Phylum(models.Model):
 class ClassName(models.Model):
 	title = models.CharField(max_length=40,
 		help_text="The full scientific name of the class in which the taxon is classified.")
+	group_as = models.ForeignKey(Category,blank=True,null=True,verbose_name="Categorize as",
+		help_text="term used by many to easily identify this species e.g Aves is to birds, ")
 	description = models.TextField(blank=True)
 
 	class Meta:
@@ -87,16 +97,7 @@ class Species(models.Model):
 		('fos','FossilSpecimen'),
 		('mob','MachineObservation'),
 	)
-	SPECIES_CATEGORY = (
-		('','----------'),
-		(10,'BIRDS'),
-		(20,'REPTILES'),
-		(30,'MAMMALS'),
-		(40,'FRESHWATER FISH'),
-		(50,'CRUSTACEANS'),
-		(60,'SHARKS AND RAYS'),
-		(70,'FLORA'),
-	)
+
 	kingdom = models.ForeignKey(Kingdom,
 		help_text="The full scientific name of the kingdom in which the taxon is classified. Example: \"Animalia\", \"Plantae\"")
 	phylum = models.ForeignKey(Phylum,
@@ -110,14 +111,12 @@ class Species(models.Model):
 		help_text="The full scientific name of the family in which the taxon is classified.")
 	genus = models.ForeignKey(Genus,
 		help_text="The full scientific name of the genus in which the taxon is classified")
-	specie = models.CharField(max_length=80,verbose_name="species name",
+	specie = models.CharField(max_length=80,verbose_name="Species",
 		help_text="Species name of this species, ex. Familiaris, from Canis Familiaris.")
-	sciname_author = models.CharField(max_length=80,verbose_name="SciName Author")
+	sciname_author = models.CharField(max_length=80,verbose_name="Scientific name author")
 	basis_of_record = models.CharField(max_length=3,verbose_name="record basis",
 		choices=RECORD_BASIS,default='hob',
 		help_text="The specific nature of the data record - a subtype of the dcterms:type. ")
-	category = models.IntegerField(choices=SPECIES_CATEGORY,
-		help_text="The category where this species belong to.")
 	slug = AutoSlugField(populate_from=['genus','specie'],verbose_name="Name")
 	taxonomic_notes = models.TextField(help_text="Any notes you wan to add about this species",blank=True)
 	created = CreationDateTimeField()

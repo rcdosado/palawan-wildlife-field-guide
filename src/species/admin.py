@@ -1,6 +1,6 @@
 from django.contrib import admin
 from species.models import ( 
-	Species,Kingdom,Phylum,ClassName, Order, Family, Genus, CommonName, SpeciesImage
+	Species,Kingdom,Phylum,ClassName, Order, Family, Genus, CommonName, SpeciesImage, Category
 )
 
 # Register your models here.
@@ -21,14 +21,14 @@ class SpeciesAdmin(admin.ModelAdmin):
 
 	fieldsets = [
 		("Taxon Details", {"fields":["kingdom","phylum","classname","order","family","genus","specie","sciname_author"]}),
-		("Identification Details", {"fields":["category","basis_of_record","taxonomic_notes"]}),
+		("Identification Details", {"fields":["basis_of_record","taxonomic_notes"]}),
 	]
 	readonly_fields = ("created","modified",)
 	list_display = ("slug","kingdom","phylum","classname","order","family","genus","specie","sciname_author","created","modified",)
 	#list_editable = ("kingdom",)
 	date_hierarchy = "modified"
 	list_display_links = ("slug",)
-	list_filter = ("category","created","modified",)
+	list_filter = ("created","modified",)
 	search_fields = ("kingdom","phylum","classname","order","family","genus","specie", "common_title",)
 	ordering = ("-modified",)
 
@@ -44,7 +44,7 @@ class CommonNameAdmin(admin.ModelAdmin):
 	search_fields = ("name",)
 
 admin.site.register(CommonName, CommonNameAdmin)
-
+admin.site.register(Category)
 admin.site.register(Kingdom)
 admin.site.register(Phylum)
 admin.site.register(ClassName)
