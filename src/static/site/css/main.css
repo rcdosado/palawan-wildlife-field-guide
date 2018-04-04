@@ -9,6 +9,8 @@ html, body{
   text-align: center;
 }
 
+
+
 .footer {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -65,9 +67,12 @@ body>.navbar-transparent {
     box-shadow: 0px 1px 0px #ddd;
 }
 
+#headernav {
+  background-color: white;
+}
 /* Home page styling */
 .corporate-jumbo {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
       url("/static/site/img/banner.jpg");
     background-repeat: no-repeat;
     background-position: 80% center;
@@ -80,11 +85,25 @@ body>.navbar-transparent {
     height: 100%;
 }
 
+
+@media screen and (min-width : 768px){
+  .corporate-jumbo h1 {
+    color: #eee;
+    text-shadow: 0px 0px 2px black;
+    font-size: 65px;
+    font-family: fantasy,serif;
+    padding-right:5px;
+
+  }
+}
+
+
+
 .corporate-jumbo .well {
     background-color: rgba(245, 245, 245, .7);
 }
 
-.corporate-jumbo p, .corporate-jumbo h1 {
+.corporate-jumbo p {
     color: #eee;
     text-shadow: 0px 0px 2px black;
 }
