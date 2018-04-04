@@ -21,15 +21,14 @@
 {% block splash %}
   <div class="jumbotron jumbotron-carousel corporate-jumbo">
     <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-sm-8">
+      <div id="titleapp" class="row">
+        <div class="col-md-12 col-sm-12">
           <h1>{% include "_brandname.html" %}</h1>
-          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-	  <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up for Free!</a>
-        </div>
-        <div class="col-md-4 col-sm-4">
+          <p>Saving Palawan Endangered Species one at a time</p>        
 
+	       <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up for Free!</a>
         </div>
+
       </div>
     </div>
   </div>
