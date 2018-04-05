@@ -1,4 +1,5 @@
 from django.db import models
+from project_msit.settings import base
 from django_extensions.db.fields import (
 	AutoSlugField, CreationDateTimeField, ModificationDateTimeField,
 )
@@ -6,6 +7,7 @@ from django_extensions.db.fields import (
 class Category(models.Model):
 	title = models.CharField(max_length=40,
 		help_text="Write which group this animal belongs to, relative to species's class e.g aves for birds")
+	description = models.TextField(blank=True)	
 	class Meta:
 		verbose_name = 'Category'
 		verbose_name_plural = 'Categories'
@@ -40,7 +42,8 @@ class Phylum(models.Model):
 class ClassName(models.Model):
 	title = models.CharField(max_length=40,
 		help_text="The full scientific name of the class in which the taxon is classified.")
-	group_as = models.ForeignKey(Category,blank=True,null=True,verbose_name="Categorize as",
+	group_as = models.ForeignKey(Category,related_name='classname',
+		blank=True,null=True,verbose_name="Categorize as",
 		help_text="term used by many to easily identify this species e.g Aves is to birds, ")
 	description = models.TextField(blank=True)
 
@@ -91,18 +94,18 @@ class Genus(models.Model):
 class Species(models.Model):
 	RECORD_BASIS = (
 		('','-----------'),
-		('hob','HumanObservation'),
-		('lis','LivingSpeciment'),
-		('prs','PreservedSpecimen'),
-		('fos','FossilSpecimen'),
-		('mob','MachineObservation'),
+		('hob','Human Observation'),
+		('lis','Living Speciment'),
+		('prs','Preserved Specimen'),
+		('fos','Fossil Specimen'),
+		('mob','Machine Observation'),
 	)
 
 	kingdom = models.ForeignKey(Kingdom,
 		help_text="The full scientific name of the kingdom in which the taxon is classified. Example: \"Animalia\", \"Plantae\"")
 	phylum = models.ForeignKey(Phylum,
 		help_text="The full scientific name of the phylum or division in which the taxon is classified.")
-	classname = models.ForeignKey(ClassName,
+	classname = models.ForeignKey(ClassName, related_name='class_category',
 		help_text="The full scientific name of the class in which the taxon is classified.",
 		verbose_name="class")
 	order = models.ForeignKey(Order,
@@ -119,6 +122,11 @@ class Species(models.Model):
 		help_text="The specific nature of the data record - a subtype of the dcterms:type. ")
 	slug = AutoSlugField(populate_from=['genus','specie'],verbose_name="Name")
 	taxonomic_notes = models.TextField(help_text="Any notes you wan to add about this species",blank=True)
+
+	created_by = models.ForeignKey(base.AUTH_USER_MODEL,
+		null=True, blank=True, 
+		on_delete=models.SET_NULL)	
+
 	created = CreationDateTimeField()
 	modified = ModificationDateTimeField()
 
@@ -136,18 +144,13 @@ class Species(models.Model):
 
 
 	def get_full_name(self):
-		return self.family.title+' '+self.specie
+		return self.genus.title+' '+self.specie
 
 class CommonName(models.Model):
 	name = models.CharField(max_length=80)
 	species = models.ForeignKey(Species, related_name='common_name', on_delete=models.CASCADE)
 	created = CreationDateTimeField()
 	modified = ModificationDateTimeField()
-
-	@property
-	def scientific_name(self):
-		#import pdb; pdb.set_trace()
-		return self.species.scientific_name
 
 	def __str__(self):
 		return self.name
