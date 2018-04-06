@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block title %}{{ block.super }}Species{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="about" %}
+{% endblock %}
+
+{% block container %}
+
+  <div class="container" style="margin-top:15%">
+
+	<h1>Detail View of Species</h1>
+	<a href="#">{{ species.slug}}</a>
+
+  	
+  </div>
+
+{% endblock %}
+
+
+
+
