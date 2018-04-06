@@ -73,11 +73,11 @@ LOGGING = {
         'django': {
             'handlers': ['django_log_file'],
             'propagate': True,
-            'level': 'DEBUG',
+            'level': 'INFO', #'DEBUG',
         },
         'project': {
             'handlers': ['proj_log_file'],
-            'level': 'DEBUG',
+            'level': 'INFO', #'DEBUG',
         },
     }
 }
