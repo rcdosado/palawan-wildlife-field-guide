@@ -1,8 +1,6 @@
 # palawan-wildlife-field-guide
-some description
-# project_msit
 
-Palawan Wildlife Field Guide is a _project for MSIT_. It is built with [Python][0] using the [Django Web Framework][1].
+Palawan Wildlife Field Guide is made as a _project for MSIT_. It is built with [Python][1] using the [Django Web Framework][2].
 
 This project has the following basic apps:
 
@@ -32,8 +30,8 @@ Run migrations:
 
 Take a look at the docs for more information.
 
-[0]: https://www.python.org/
-[1]: https://www.djangoproject.com/
-=======
+[1]: https://www.python.org/
+[2]: https://www.djangoproject.com/
+
 # palawan-wildlife-field-guide
 Copyleft 2018. 
