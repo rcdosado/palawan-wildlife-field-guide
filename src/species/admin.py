@@ -68,8 +68,9 @@ class SpeciesAdmin(admin.ModelAdmin):
 
 	#https://books.agiliq.com/projects/django-admin-cookbook/en/latest/current_user.html
 	def save_model(self, request, obj, form, change):
-		#import pdb; pdb.set_trace()
-		obj.created_by = request.user
+		# import pdb; pdb.set_trace()
+		if not obj.created_by:
+			obj.created_by = request.user
 		super().save_model(request, obj, form, change)
 
 	def queryset(self, request):

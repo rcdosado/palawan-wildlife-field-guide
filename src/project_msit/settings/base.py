@@ -118,7 +118,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# RCD set this to False to fix naive datetime problem in test
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/

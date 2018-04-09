@@ -13,5 +13,9 @@ def create_profile_handler(sender, instance, created, **kwargs):
         return
     # Create the profile object, only if it is newly created
     profile = models.Profile(user=instance)
+    # Fixed factory boy problem of UNIQUE constraint error
+    if profile.user_id==instance.profile.user.id:
+    	#this means userid already existing
+        return
     profile.save()
     logger.info('New user profile for {} created'.format(instance))

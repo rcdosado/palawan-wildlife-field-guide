@@ -146,6 +146,12 @@ class Species(models.Model):
 	def get_full_name(self):
 		return self.genus.title+' '+self.specie
 
+	def save(self, *args, **kwargs):
+		# import pdb; pdb.set_trace()
+		# x = 1+1
+		super().save(*args, **kwargs)
+
+
 class CommonName(models.Model):
 	name = models.CharField(max_length=80)
 	species = models.ForeignKey(Species, related_name='common_name', on_delete=models.CASCADE)
