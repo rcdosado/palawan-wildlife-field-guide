@@ -284,14 +284,21 @@ body>.navbar-transparent {
 #searchsection {
 
 }
+#displayspec {
+  margin-top: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
+  background-color: #efefef;
+}
+
+
 /* title of personell*/
 #sec2 > div > div:nth-child(2) h2{
   text-align: center;
 }
 /*the search box font size*/
 #searchsection > div > div > div > input.form-control {
-  font-size: large;
-  font-weight: bold;
+  font-size: medium;
 }
 
 /*@media (hover: hover) {

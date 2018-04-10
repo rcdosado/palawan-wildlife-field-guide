@@ -7,16 +7,20 @@ from species.models import Species
 
 class SpeciesListView(ListView):
 	model = Species 
+	context_object_name = 'species_list'
+	queryset = Species.objects.all()
 	template_name = 'species/list_species.html'
 
 	def get_context_data(self, **kwargs):
 		context = super(SpeciesListView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
+		# import pdb; pdb.set_trace()
 		return context
 
 class SpeciesDetailView(DetailView):
 	model = Species 
-	template_name = 'species/detail_species.html'
+	context_object_name = 'specie_detail'
+	template_name = 'species/detailview.html'
 	# slug_field = 'slug'
 
 	def get_context_data(self, **kwargs):

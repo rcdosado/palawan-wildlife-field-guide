@@ -1,0 +1,35 @@
+{% extends "list_species.html" %} 
+
+{% block display_species %}
+  <h1>List View</h1>
+  <div id="displayspec" class="row" >
+     {% for specie in species_list %}
+     <div class="row">
+        <div class="col-sm-2">
+          <h2>picture</h2>
+        </div>
+        <div class="col-sm-10 text-left">
+          <h1><a href="#">{{specie.scientific_name}}</a></h1>
+          <strong>Kingdom : </strong><i>{{specie.kingdom}}</i><br>
+          <strong>Phylum : </strong><i>{{specie.phylum}}</i><br>
+          <strong>Class : </strong><i>{{specie.classname}}</i><br>
+          <strong>Order : </strong><i>{{specie.order}}</i><br>
+          <strong>Family : </strong><i>{{specie.family}}</i><br>
+          <strong>Genus : </strong><i>{{specie.genus}}</i><br>
+          <strong>Species Name : </strong><i>{{specie.specie}}</i><br>
+          <strong>Slug : </strong><i>{{specie.slug}}</i><br>
+          <strong>Scientific Name Author : </strong><i>{{specie.sciname_author}}</i><br>
+          <strong>Basis of Record : </strong><i>{{specie.basis_of_record}}</i><br>
+          <strong>Taxonomic Notes : </strong><br>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi soluta praesentium nostrum, aliquam eos voluptate eaque laboriosam aliquid sed, quas quidem voluptatem nulla quisquam odit qui aspernatur, quo blanditiis. Repellat.</p>
+          <strong>Researcher : </strong><i>{{specie.created_by}}</i><br>
+          <strong>{{now}}</strong><br>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+     {% endfor %}
+  </div>
+{% endblock display_species %}  
