@@ -285,10 +285,10 @@ body>.navbar-transparent {
 
 }
 #displayspec {
-  margin-top: 15px;
+  margin-top: 10px;
   margin-left: 0px;
-  margin-right: 0px;
   background-color: #efefef;
+  font-size: medium;
 }
 
 
