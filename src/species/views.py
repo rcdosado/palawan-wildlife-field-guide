@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from project_msit.settings import base
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from project_msit.settings import base
 
-from species.models import Species,Category
+from species.models import Species,Category,SpeciesImage
 
 class SpeciesListView(ListView):
 	model = Species 
@@ -13,6 +14,7 @@ class SpeciesListView(ListView):
 		'kingdom','phylum','order','family','genus','created_by').all().order_by('-modified')		
 	template_name = 'species/list_species.html'
 	paginate_by=4
+
 
 	def get_queryset(self):
 		'''
@@ -42,10 +44,8 @@ class SpeciesListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(SpeciesListView, self).get_context_data(**kwargs)
 		# context['now'] = timezone.now()
-		# import pdb; pdb.set_trace()
 		# use annotation here, some duplicate query detected
 		context['category_list'] = Category.objects.all()
-		# context['selected_category'] 
 		return context
 
 class SpeciesDetailView(DetailView):

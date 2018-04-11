@@ -122,7 +122,9 @@ class Species(models.Model):
 		help_text="The specific nature of the data record - a subtype of the dcterms:type. ")
 	slug = AutoSlugField(populate_from=['genus','specie'],verbose_name="Name")
 	taxonomic_notes = models.TextField(help_text="Any notes you wan to add about this species",blank=True)
-
+	profile_pic = models.ImageField('Species Profile Pic',
+		upload_to='specie_profile_pics/%Y-%m-%d/', 
+		null=True,blank=True)
 	created_by = models.ForeignKey(base.AUTH_USER_MODEL,
 		null=True, blank=True, 
 		on_delete=models.SET_NULL)	
@@ -162,7 +164,7 @@ class CommonName(models.Model):
 		return self.name
 
 class SpeciesImage(models.Model):
-	species = models.ForeignKey(Species,help_text="Add your species image(s) here")
+	species = models.ForeignKey(Species, related_name='specie_image',help_text="Add your species image(s) here")
 	image = models.ImageField('Species Image',upload_to='species_pics/%Y-%m-%d/',null=True,blank=True)
 	description = models.TextField(blank=True,help_text="Any description of the image e.g attribution, location etc.")
 

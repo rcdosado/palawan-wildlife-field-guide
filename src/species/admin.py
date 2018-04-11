@@ -47,12 +47,11 @@ class SpeciesAdmin(admin.ModelAdmin):
 	fieldsets = [
 		("Taxon Details", {"fields":["kingdom","phylum","classname",
 			"order","family","genus","specie","sciname_author"]}),
-		("Identification Details", {"fields":["basis_of_record",
-			"taxonomic_notes"]}),
+		("Identification Details", {"fields":["profile_pic","basis_of_record","taxonomic_notes"]}),
 	]
 	readonly_fields = ("created","modified",)
 	list_display = ("slug","kingdom","phylum","classname","order",
-		"family","genus","specie",
+		"family","genus","specie","profile_pic",
 		"sciname_author","created_by","modified",)
 	date_hierarchy = "modified"
 	list_display_links = ("slug",)

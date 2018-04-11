@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
 {% load staticfiles %} 
-{% load crispy_forms_tags %} 
+{% load thumbnail %}
 {% block title %}{{ block.super }}Species{% endblock %} 
 {% block navbar-left %} 
 {% include "_navbar.html" with active_link="species" %} 
@@ -62,7 +62,8 @@
                     {% for specie in species_list %}
                     <div class="row">
                         <div class="col-sm-2">
-                            <h2>picture</h2>
+                            
+                    <img title="Species Photo" class="img-circle img-responsive" src="{% thumbnail specie.profile_pic|default:'species_profile.png' 170x170 crop%}">
                         </div>
                         <div class="col-sm-10 text-left">
                             <h2><a href="{% url 'species:species-detail' specie.pk %}">{{specie.scientific_name |capfirst}},{{specie.sciname_author}} </a></h2>
