@@ -12,6 +12,7 @@ class SpeciesListView(ListView):
 	queryset = Species.objects.select_related('classname__group_as',
 		'kingdom','phylum','order','family','genus','created_by').all().order_by('-modified')		
 	template_name = 'species/list_species.html'
+	paginate_by=4
 
 	def get_queryset(self):
 		'''
@@ -41,7 +42,10 @@ class SpeciesListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(SpeciesListView, self).get_context_data(**kwargs)
 		# context['now'] = timezone.now()
+		# import pdb; pdb.set_trace()
+		# use annotation here, some duplicate query detected
 		context['category_list'] = Category.objects.all()
+		# context['selected_category'] 
 		return context
 
 class SpeciesDetailView(DetailView):
@@ -59,9 +63,7 @@ class SpeciesDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		# import pdb; pdb.set_trace()
 		# context['now'] = timezone.now()
-		#import pdb; pdb.set_trace()
 		context['category_list'] = Category.objects.all().order_by('title')
 		return context	
 

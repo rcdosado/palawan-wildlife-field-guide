@@ -57,7 +57,6 @@ class SpeciesAdmin(admin.ModelAdmin):
 	date_hierarchy = "modified"
 	list_display_links = ("slug",)
 	list_filter = (CategoryFilter,)
-	# search_fields = ("kingdom__title","phylum__title","classname__title","order__title","family__title","genus__title","specie",)
 	search_fields = ("genus__title","specie",)
 	ordering = ("-modified",)
 	exclude = ['created_by',]
