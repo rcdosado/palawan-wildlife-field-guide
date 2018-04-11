@@ -65,7 +65,6 @@
                             <h2>picture</h2>
                         </div>
                         <div class="col-sm-10 text-left">
-                            <hr>
                             <h2><a href="{% url 'species:species-detail' specie.pk %}">{{specie.scientific_name |capfirst}},{{specie.sciname_author}} </a></h2>
                             <strong>Discovered by : </strong><i>{{specie.sciname_author}}</i>
                             <br>
@@ -80,10 +79,10 @@
                             <strong>Taxonomic Notes : </strong>
                             <br>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi soluta praesentium nostrum, aliquam eos voluptate eaque laboriosam aliquid sed, quas quidem voluptatem nulla quisquam odit qui aspernatur, quo blanditiis. Repellat.</p>
-                            <hr>
                             <strong>Researcher : </strong><i>{{specie.created_by}}</i>
                             <br>
                             <strong>Last Modified : </strong><i>{{specie.modified | date:"D d M Y"}}</i>
+                            <hr>
                         </div>
                         <br>
                         <br>
@@ -95,19 +94,36 @@
                         <nav id="pagination-setting" aria-label="Page navigation example">
                             <div class="col-md-2">
                             </div>
-                            <div class="col-md-10 text-left">
-                                <p>Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}.</p>
-                                <ul class="pagination">
-                                  {% if page_obj.has_previous %}
-                                    <li class="page-item"><a class="page-link" href="/species?page={{page_obj.previous_page_number}}">Previous</a></li>
-                                  {% endif %}
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  {% if page_obj.has_next %}
-                                    <li class="page-item"><a class="page-link" href="/species?page={{page_obj.next_page_number}}">Next</a></li>
-                                  {% endif %}
-                                  </ul>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3 class="text-left">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}.</h3>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="pagination text-right">
+                                          {% if page_obj.has_previous %}
+                                            <li class="page-item"><a class="page-link" href="/species?page={{page_obj.previous_page_number}}">Previous</a></li>
+                                          {% endif %}
+
+
+                                          {% for page in page_obj.paginator.page_range %}
+                                                {% if page_obj.number == page %} 
+                                                    <li class="active">
+                                                        <a href="/species?page={{page}}">{{page}}<span class="sr-only">(current)</span></a>
+                                                    </li> 
+                                                {% else %}
+                                                    <li>
+                                                        <a href="/species?page={{page}}">{{page}}</a>
+                                                    </li> 
+                                                {% endif %}
+                                          {% endfor %}
+                   
+                                          {% if page_obj.has_next %}
+                                            <li class="page-item"><a class="page-link" href="/species?page={{page_obj.next_page_number}}">Next</a></li>
+                                          {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </nav>
                 </div>
