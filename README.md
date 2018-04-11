@@ -22,9 +22,20 @@ Install all dependencies:
 
     pip install -r requirements.txt
 
+Set Environment Variables:
+	copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
+	set new SECRET_KEY, and set the database to use, default is sqlite
+
 Run migrations:
     
     python manage.py migrate
+
+Create Admin account:
+	python manage.py createsuperuser
+	provide information
+
+Run application:
+	python manage.py runserver
 
 ### Detailed instructions
 
