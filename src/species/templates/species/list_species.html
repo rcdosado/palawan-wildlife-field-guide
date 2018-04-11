@@ -19,9 +19,9 @@
                 <div class="row">
                     <nav class="nav-sidebar">
                         <ul class="nav">
-                            <li class="active"><a href="#">All</a></li>
+                            <li class="active"><a href="{% url "species:species-list" %}?search_param=all&q=">All</a></li>
                             {% for category in category_list %}
-                            <li><a href="#">{{category.title}}</a></li>
+                            <li><a href="{% url "species:species-list" %}?search_param=all&q={{category.title}}">{{category.title}}</a></li>
                             {% endfor %}
                             <li class="nav-divider"></li>
                             <li><a href="#"><i class="glyphicon glyphicon-off"></i> Export</a></li>
@@ -30,6 +30,7 @@
                 </div>
             </div>
             <div id="searchsection" class="col-md-10 text-center">
+                <form method='GET' action=''>
                 <div class="row">
                     <div class="col-sm-12">
                         <h2>Search for Species</h2>
@@ -49,13 +50,14 @@
                                 </ul>
                             </div>
                             <input type="hidden" name="search_param" value="all" id="search_param">
-                            <input type="text" class="form-control" name="x" placeholder="Search term...">
+                            <input type="text" class="form-control" value="{{request.GET.q}}" name="q" placeholder="Search term...">
                             <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                     </div>
                 </div>
+                </form>
                 <div id="displayspec" class="row">
                     {% for specie in species_list %}
                     <div class="row">
