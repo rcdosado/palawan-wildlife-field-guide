@@ -1,7 +1,20 @@
 from django.contrib import admin
+
 from species.models import ( 
 	Species,Kingdom,Phylum,ClassName, Order, Family, Genus, CommonName, SpeciesImage, Category
 )
+
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+
+
+class SpeciesResource(resources.ModelResource):
+	class Meta:
+		model = Species 
+		fields = ("id","classname__group_as__title","kingdom__title","phylum__title","classname__title","order__title",
+		"family__title","genus__title","specie",
+		"sciname_author","created_by__name","created_by__email","modified","created",)
+
 
 # Register your models here.
 class CommonNameInline(admin.StackedInline):
@@ -32,7 +45,8 @@ class CategoryFilter(admin.SimpleListFilter):
 		return queryset
 
 
-class SpeciesAdmin(admin.ModelAdmin):
+class SpeciesAdmin(ImportExportModelAdmin):
+	resource_class = SpeciesResource
 	list_select_related = (
 		'kingdom',
 		'phylum',
