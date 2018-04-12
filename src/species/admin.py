@@ -51,7 +51,7 @@ class SpeciesAdmin(admin.ModelAdmin):
 	]
 	readonly_fields = ("created","modified",)
 	list_display = ("slug","kingdom","phylum","classname","order",
-		"family","genus","specie","profile_pic",
+		"family","genus","specie",
 		"sciname_author","created_by","modified",)
 	date_hierarchy = "modified"
 	list_display_links = ("slug",)
@@ -95,6 +95,14 @@ class CategoryAdmin(admin.ModelAdmin):
 	search_fields = ("title",)
 
 admin.site.register(Category, CategoryAdmin)
+
+
+class SpeciesImageAdmin(admin.ModelAdmin):
+	list_display = ("id","species", "pic", "description")
+	fields = ('image_tag',)
+	readonly_fields = ('image_tag',)
+
+admin.site.register(SpeciesImage, SpeciesImageAdmin)
 
 admin.site.register(Kingdom)
 admin.site.register(Phylum)

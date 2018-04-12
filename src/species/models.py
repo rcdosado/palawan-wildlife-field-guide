@@ -165,8 +165,15 @@ class CommonName(models.Model):
 
 class SpeciesImage(models.Model):
 	species = models.ForeignKey(Species, related_name='specie_image',help_text="Add your species image(s) here")
-	image = models.ImageField('Species Image',upload_to='species_pics/%Y-%m-%d/',null=True,blank=True)
+	pic = models.ImageField('Species Image',upload_to='species_pics/%Y-%m-%d/',null=True,blank=True)
 	description = models.TextField(blank=True,help_text="Any description of the image e.g attribution, location etc.")
+
+	def image_tag(self):
+		
+		return u'<img src="%s" width="100" height="100"/>' % self.pic.url
+
+	image_tag.short_description = "Image"
+	image_tag.allow_tags = True
 
 	def __str__(self):
 		return self.species.scientific_name

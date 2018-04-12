@@ -65,6 +65,9 @@ class SpeciesDetailView(DetailView):
 		context = super().get_context_data(**kwargs)
 		# context['now'] = timezone.now()
 		context['category_list'] = Category.objects.all().order_by('title')
+		spqs = SpeciesImage.objects.filter(species__id=self.kwargs['pk'])
+		context['image_urls'] = [s.pic.url for s in spqs]
+		# import pdb; pdb.set_trace()
 		return context	
 
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
+{% load thumbnail %}
 {% load staticfiles %} 
-{% load crispy_forms_tags %} 
 {% block title %}{{ block.super }}Species{% endblock %} 
 {% block navbar-left %} 
 {% include "_navbar.html" with active_link="species" %} 
@@ -12,15 +12,16 @@
     <div class="container">
         <div class="row">
         </div>
+
         <div class="row">
             <div id="sidebarsection" class="col-sm-2">
                 <div class="row"></div>
                 <div class="row">
-                    <nav class="nav-sidebar">
+                    <nav id="cats" class="nav-sidebar">
                         <ul class="nav">
-                            <li class="active"><a href="#">All</a></li>
+                            <li><a href="{% url "species:species-list" %}?q=">All</a></li>
                             {% for category in category_list %}
-                            <li><a href="#">{{category.title}}</a></li>
+                                <li><a href="{% url "species:species-list" %}?q={{category.title}}">{{category.title}}</a></li>
                             {% endfor %}
                             <li class="nav-divider"></li>
                             <li><a href="#"><i class="glyphicon glyphicon-off"></i> Export</a></li>
@@ -28,7 +29,17 @@
                     </nav>
                 </div>
             </div>
+             
             <div id="searchsection" class="col-md-10 text-center">
+            <div class="row">
+                <div class="col-md-12 text-left" style="padding-left:6%;">
+                 <h2><a href="{% url 'species:species-detail' specie_detail.pk %}">{{specie_detail.scientific_name |capfirst}},{{specie_detail.sciname_author}} </a></h2>
+                 <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h4>
+                 <hr>
+                </div>
+            </div>
+<!-- Write your comments here 
+                <form method='GET' action=''>
                 <div class="row">
                     <div class="col-sm-12">
                         <h2>Search for Species</h2>
@@ -48,63 +59,81 @@
                                 </ul>
                             </div>
                             <input type="hidden" name="search_param" value="all" id="search_param">
-                            <input type="text" class="form-control" name="x" placeholder="Search term...">
+                            <input type="text" class="form-control" value="{{request.GET.q}}" name="q" placeholder="Search term...">
                             <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div id="displayspec" class="row text-left">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <h2><a href="#">{{specie_detail.scientific_name|capfirst}}, {{specie_detail.sciname_author}}</a></h2>
-                        </div>
-                        <div class="row">
-                            <h3>PICTURES PAGE</h3>
-                            <strong>Kingdom : </strong><i>{{specie_detail.kingdom}}</i>
-                            <br>
-                            <strong>Phylum : </strong><i>{{specie_detail.phylum}}</i>
-                            <br>
-                            <strong>Class : </strong><i>{{specie_detail.classname}}</i>
-                            <br>
-                            <strong>Order : </strong><i>{{specie_detail.order}}</i>
-                            <br>
-                            <strong>Family : </strong><i>{{specie_detail.family}}</i>
-                            <br>
-                            <strong>Genus : </strong><i>{{specie_detail.genus}}</i>
-                            <br>
-                            <strong>Species Name : </strong><i>{{specie_detail.specie}}</i>
-                            <br>
-                            <strong>Scientific Name Author : </strong><i>{{specie_detail.sciname_author}}</i>
-                            <br>
-                            <strong>Slug : </strong><i>{{specie_detail.slug}}</i>
-                            <br>
-                            <strong>Basis of Record : </strong><i>{{specie_detail.basis_of_record}}</i>
-                            <br>
-                            <strong>Taxonomic Notes : </strong>
-                            <br>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi soluta praesentium nostrum, aliquam eos voluptate eaque laboriosam aliquid sed, quas quidem voluptatem nulla quisquam odit qui aspernatur, quo blanditiis. Repellat.</p>
-                            <strong>Discovered by : </strong><i>{{specie.sciname_author}}</i>
-                            <br>
-                            <strong>Researcher : </strong><i>{{specie_detail.created_by}}</i>
-                            <br>
-                            <strong>Created : </strong>{{specie_detail.created | date:"D d M Y" }}
-                            <br>
-                            <strong>Updated : </strong><i>{{specie_detail.modified | date:"D d M Y" }}</i>
-                            <br>
-                        </div>
-                        <div class="row">
-                            <div class="row">
-                                <h3 class="col-md-12">Area of Distribution</h3>
-                            </div>
-                            <div class="row">
-                                <div id="map-container" class="col-md-12"></div>
-                            </div>
-                        </div>
+                </form>
+-->
+                <div id="displayspec" class="row">
+                    <div class="row">                    
+                        <div class="col-md-4">
+                        {% if image_urls %}
+                            {% for i in image_urls %}
+                                <img class="img-fluid" src="{{ i }}" style="width:80%;padding-top:5%;">
+                            {% endfor %}
+                        {% else %}
+                                <img class="img-fluid" src="{{MEDIA_URL}}blank.png" style="width:100%;padding-top:5%;">
+                        {% endif %}
 
+                        </div>
+                        <div class="col-md-8 text-left">
+
+                            <div class="container-fluid">
+                                <strong>Kingdom : </strong><i>{{specie_detail.kingdom}}</i>
+                                <br>
+                                <strong>Phylum : </strong><i>{{specie_detail.phylum}}</i>
+                                <br>
+                                <strong>Class : </strong><i>{{specie_detail.classname}}</i>
+                                <br>
+                                <strong>Order : </strong><i>{{specie_detail.order}}</i>
+                                <br>
+                                <strong>Family : </strong><i>{{specie_detail.family}}</i>
+                                <br>
+                                <strong>Genus : </strong><i>{{specie_detail.genus}}</i>
+                                <br>
+                                <strong>Species Name : </strong><i>{{specie_detail.specie}}</i>
+                                <br>
+                                <strong>Scientific Name Author : </strong><i>{{specie_detail.sciname_author}}</i>
+                                <br>
+                                <strong>Slug : </strong><i>{{specie_detail.slug}}</i>
+                                <br>
+                                <strong>Basis of Record : </strong><i>{{specie_detail.basis_of_record}}</i>
+                                <br>
+                                <strong>Taxonomic Notes : </strong>
+                                <br>                            
+                                <strong>Discovered by : </strong><i>{{specie_detail.sciname_author}}</i>
+                                <br>
+                                <strong>Genus : </strong><i>{{specie_detail.genus}}</i>
+                                <br>
+                                <strong>Species Name : </strong><i>{{specie_detail.specie}}</i>
+                                <br>
+                                <strong>Slug : </strong><i>{{specie_detail.slug}}</i>
+                                <br>
+                                <strong>Basis of Record : </strong><i>{{specie_detail.basis_of_record}}</i>
+                                <br>
+                                <strong>Taxonomic Notes : </strong>
+                                <br>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi soluta praesentium nostrum, aliquam eos voluptate eaque laboriosam aliquid sed, quas quidem voluptatem nulla quisquam odit qui aspernatur, quo blanditiis. Repellat.</p>
+                                <strong>Researcher : </strong><i>{{specie_detail.created_by}}</i>
+                                <br>
+                                <strong>Created On: </strong>{{specie_detail.created | date:"D d M Y" }}
+                                <br>
+                                <strong>Last Modified : </strong><i>{{specie_detail.modified | date:"D d M Y"}}</i>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -113,41 +142,45 @@
 <div id="sec3">
     <div class="container">
         <div class="row">
+            <div id="map-outer" class="col-md-12">
+                <div id="address" class="col-md-4">
+
+                </div>
+                <div id="map-container" class="col-md-8"></div>
+            </div>
         </div>
     </div>
 </div>
 {% endblock container %} 
 {% block scripts %}
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script function init_map() { 
-    // Enter the latitude and longitude of your office here 
-    //var rlat=( (Math.random()> 0.5 ? 0.001 : -0.009) + Math.random() * 0.008);
-    //var rlong = ((Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008);
-
-    var specieLocation = new google.maps.LatLng(9.7769218, 118.7347354);
-    // var specieLocation = new google.maps.LatLng(rlat, rlong);
-
-    var mapOptions = {
-        center: specieLocation,
-        zoom: 5
-    };
-
-    var marker = new google.maps.Marker({
-        position: specieLocation,
-        title: "The Approximate Location of a Specie"
-    });
-
-    var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
-    marker.setMap(map);
-    }
-    google.maps.event.addDomListener(window, 'load', init_map);
-</script>
 <script>
-    $(document).ready(function(e) {
 
-        $('nav ul li').click(function() {
-            $(this).addClass('active').siblings().removeClass('active');
-        });
+    $(document).ready(function(e) {
+        //https://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
+        function getSearchParameters() {
+              var prmstr = window.location.search.substr(1);
+              return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+        }
+
+        function transformToAssocArray( prmstr ) {
+            var params = {};
+            var prmarr = prmstr.split("&");
+            for ( var i = 0; i < prmarr.length; i++) {
+                var tmparr = prmarr[i].split("=");
+                params[tmparr[0]] = tmparr[1];
+            }
+            return params;
+        }     
+
+        var params = getSearchParameters();
+        var s = decodeURIComponent(params.q);
+       
+        if(s=='undefined' || s=="") s='All';
+        $('nav#cats > ul > li:contains('+s+')')
+            .addClass('active')
+            .siblings()
+            .removeClass('active');
 
         $('.search-panel .dropdown-menu').find('a').click(function(e) {
             e.preventDefault();
