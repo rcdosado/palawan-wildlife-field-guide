@@ -39,6 +39,7 @@ Create Admin account:
 
 Run application:
 	python manage.py runserver
+	python manage.py createsuperuser 
 
 ### Detailed instructions
 
