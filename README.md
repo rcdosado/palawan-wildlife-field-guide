@@ -20,13 +20,14 @@ comes with virtualenv built-in. So create a virtual env by:
     3. `you'll see something like (env) as prefix for your working directory`
 
 Install all dependencies:
-
+	
     pip install -r requirements.txt
 
-Set Environment Variables:
-	1. copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
-	2. set new SECRET_KEY, you can generate at this site https://www.miniwebtool.com/django-secret-key-generator/
-	3. set the database to use if you do not prefer sqlite
+Set Environment Variables
+
+    1. copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
+    2. set new SECRET_KEY, you can generate at this site https://www.miniwebtool.com/django-secret-key-generator/
+    3. set the database to use if you do not prefer sqlite
 
 Run migrations:
     
