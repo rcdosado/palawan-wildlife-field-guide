@@ -34,12 +34,13 @@ Run migrations:
     python manage.py migrate
 
 Create Admin account:
-	python manage.py createsuperuser
-	provide information username, email, password
+
+    python manage.py createsuperuser
+    provide information username, email, password
 
 Run application:
-	python manage.py runserver
-	python manage.py createsuperuser 
+
+    python manage.py runserver
 
 ### Detailed instructions
 
