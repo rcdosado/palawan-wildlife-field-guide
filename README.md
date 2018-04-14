@@ -15,16 +15,18 @@ This project has the following basic apps:
 To set up a development environment quickly, first install Python 3. It
 comes with virtualenv built-in. So create a virtual env by:
 
-    1. `$ python3 -m venv project_msit`
-    2. `$ . project_msit/bin/activate`
+    1. `$ python3 -m venv env`
+    2. `$ /env/scripts/activate`
+    3. `you'll see something like (env) as prefix for your working directory`
 
 Install all dependencies:
 
     pip install -r requirements.txt
 
 Set Environment Variables:
-	copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
-	set new SECRET_KEY, and set the database to use, default is sqlite
+	1. copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
+	2. set new SECRET_KEY, you can generate at this site https://www.miniwebtool.com/django-secret-key-generator/
+	3. set the database to use if you do not prefer sqlite
 
 Run migrations:
     
@@ -32,7 +34,7 @@ Run migrations:
 
 Create Admin account:
 	python manage.py createsuperuser
-	provide information
+	provide information username, email, password
 
 Run application:
 	python manage.py runserver
@@ -45,4 +47,5 @@ Take a look at the docs for more information.
 [2]: https://www.djangoproject.com/
 
 # palawan-wildlife-field-guide
+
 Copyleft 2018. 
