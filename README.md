@@ -16,7 +16,7 @@ To set up a development environment quickly, first install Python 3. It
 comes with virtualenv built-in. So create a virtual env by:
 
     1. `$ python3 -m venv env`
-    2. `$ /env/scripts/activate`
+    2. `$ /env/bin/activate`
     3. `you'll see something like (env) as prefix for your working directory`
 
 Install all dependencies:
