@@ -41,6 +41,7 @@ Create Admin account:
 Run application:
 
     python manage.py runserver
+    browse at localhost:8000
 
 ### Detailed instructions
 
