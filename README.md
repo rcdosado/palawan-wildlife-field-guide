@@ -25,7 +25,7 @@ Install all dependencies:
 
 Set Environment Variables
 
-    1. copy local.sample.env at <project_msit>/src/<project_msit>/settings/ as local.env 
+    1. copy local.sample.env at <this_project_name>/src/<this_project_name>/settings/ as local.env 
     2. set new SECRET_KEY, you can generate at this site https://www.miniwebtool.com/django-secret-key-generator/
     3. set the database to use if you do not prefer sqlite
 
